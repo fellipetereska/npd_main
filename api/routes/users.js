@@ -1,12 +1,11 @@
 import express from "express";
-
-// Import Database
-import { db } from '../db.js'
-
-const router = express.Router()
+import { db } from "../db.js";
 
 
-//Tabela Participantes
+const router = express.Router();
+
+
+//Tabela Empresa
 //Get table
 router.get("/participantes", (req, res) => {
     const q = `SELECT * FROM participantes`;
@@ -30,7 +29,7 @@ router.post("/participantes", (req, res) => {
             return res.status(500).json({ error: 'Erro interno do servidor', details: err.message });
         }
         
-        return res.status(200).json(`Participante cadastrado com sucesso!`);
+        return res.status(200).json(`Participante cadastrada com sucesso!`);
     })
 });
 
@@ -40,9 +39,9 @@ router.put("/participantes/:id_participante", (req, res) => {
     const { nome_participante, descricao_participante } = req.body;
     
     const q = `
-    UPDATE empresa
+    UPDATE participantes
     SET nome_participante = ?,
-    descricao_participante = ?,
+    descricao_participante = ?
     WHERE id_participante = ?
     `;
     
@@ -58,22 +57,21 @@ router.put("/participantes/:id_participante", (req, res) => {
             return res.status(500).json({ error: 'Erro interno do servidor', details: err.message });
         }
         
-        return res.status(200).json("Participante atualizado com sucesso!");
+        return res.status(200).json("Empresa atualizada com sucesso!");
     });
 });
 
-//Delete row in table
+//Delete rou in table
 router.delete("/participantes/:id_participante", (req, res) =>{
-    const q = `DELETE FROM participante WHERE id = ?`;
+    const q = `DELETE FROM participantes WHERE id = ?`;
     
     db.query(q, [req.params.id_participante], (err) => {
         console.error("Erro ao deletar participante na tabela", err);
         return res.status(500).json({ error: 'Erro interno do servidor', details: err.message });
     });
     
-    return res.status(200).json(`Participante excluído com sucesso!`);
+    return res.status(200).json(`Participante excluída com sucesso!`);
 });
-
 
 
 export default router;

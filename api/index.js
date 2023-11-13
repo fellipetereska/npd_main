@@ -1,6 +1,6 @@
 import cors from "cors";
 import express from "express";
-import userRoutes from './routes/users.js'
+import userRoutes from "./routes/users.js";
 import bodyParser from "body-parser";
 
 // Usando express
@@ -15,8 +15,9 @@ app.use(bodyParser.json());
 
 // Usar as rotas definidas em userRoutes no caminho "/"
 app.use("/", userRoutes);
+// app.use("/setor_empresa", userRoutes)
 
 // Port
 app.listen(8800, () => {
-  console.log("Servidor está ouvindo na porta 8800");
+  console.log("Servidor Conectado");
 });

@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import { toast } from "react-toastify";
 import { supabase } from "../services/api";
 
@@ -7,11 +7,9 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
 
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
 
   const signIn = async (usuario, senha, setRedirect) => {
-
-    console.log("Trying to sign in with:", usuario, senha);
 
     if (!usuario || !senha) {
       toast.warn("Preencha todos os campos!");
@@ -19,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      const { error } = supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email: usuario,
         password: senha
       })
@@ -29,8 +27,6 @@ export const AuthProvider = ({ children }) => {
         console.error("Erro de autenticação:", error);
         return;
       }
-      console.log("Login bem-sucedido!");
-
       setRedirect(true);
       setUser(usuario);
 
@@ -40,6 +36,23 @@ export const AuthProvider = ({ children }) => {
       toast.error("Erro ao fazer login. Verifique o console para mais detalhes.");
     }
   };
+
+  const signUp = async (usuario, senha) => {
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: usuario,
+        password: senha,
+      })
+
+      if (error) {
+        toast.error("Erro ao inserir usuário.");
+        console.error("Erro de autenticação:", error);
+        return;
+      }
+    } catch(error) {
+      console.log("Erro ao inseir usuário: ", error)
+    }
+  }
 
   const signout = () => {
     setUser(null);
@@ -52,6 +65,7 @@ export const AuthProvider = ({ children }) => {
         user,
         signin: signIn,
         signout,
+        signUp
       }}>
       {children}
     </AuthContext.Provider>

@@ -1,5 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify';
+import { AuthProvider } from './contexts/auth';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 // Importante as Paginas
 import Home from './components/pages/Home';
@@ -16,6 +19,7 @@ import Footer from './components/layout/Footer';
 function App() {
   return (
     <>
+      <AuthProvider>
         <Router>
           {/* Menu */}
           <Navbar />
@@ -23,10 +27,10 @@ function App() {
           <Routes>
             {/* Linkando as rotas as paginas */}
             {/* Menu */}
-            <Route path='/' element={<Home />}/>
-            <Route path='/aboutus' element={<AboutUs />}/>
-            <Route path='/projetos' element={<Projetos />}/>
-            <Route path='/noticias' element={<Noticias />}/>
+            <Route path='/' element={<Home />} />
+            <Route path='/aboutus' element={<AboutUs />} />
+            <Route path='/projetos' element={<Projetos />} />
+            <Route path='/noticias' element={<Noticias />} />
           </Routes>
           {/* Rodapé */}
           <Footer />
@@ -34,6 +38,7 @@ function App() {
 
         {/* Mensagem */}
         <ToastContainer autoClose={3000} position={toast.POSITION.TOP_RIGHT} />
+      </AuthProvider>
     </>
   );
 }

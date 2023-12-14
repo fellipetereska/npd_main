@@ -7,7 +7,6 @@ function CadastroParticipante() {
         <form className="w-full">
           <div className="flex flex-wrap -mx-3 p-3">
 
-            {/* Campos */}
             <div className="w-full md:w-1/3 px-3">
               <label className="tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nome_empresa">
                 Nome do Participante

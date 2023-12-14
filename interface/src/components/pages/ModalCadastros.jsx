@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
 import CadastroParticipante from "./subPages/CadastroParticipante";
+import CadastroProjetos from "./subPages/CadastroProjetos";
+import CadastroNoticias from "./subPages/CadastroNoticias";
 
 function Login({ onCancel, isOpen }) {
 
@@ -25,13 +27,13 @@ function Login({ onCancel, isOpen }) {
       case 1:
         return (
           <>
-            <CadastroParticipante />
+            <CadastroProjetos />
           </>
         );
       case 2:
         return (
           <>
-            <CadastroParticipante />
+            <CadastroNoticias />
           </>
         );
       default:

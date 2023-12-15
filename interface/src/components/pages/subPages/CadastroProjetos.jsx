@@ -5,7 +5,11 @@ import { supabase } from "../../../services/api";
 
 function CadastroProjetos() {
 
+  const ref = useRef(null);
+
   const [tecnologias, setTecnologias] = useState(null);
+  const [nomeProjeto, setNomeProjeto] = useState(null);
+  const [descricaoPorjeto, setDescricaoProjeto] = useState(null)
 
   const getTecnologias = async () => {
     try {
@@ -21,13 +25,45 @@ function CadastroProjetos() {
   }, [])
 
   const handleAdd = () => {
-    console.log("Adicionado")
+  }
+
+  const handleSubmit = async (e) => {
+    // const { data } = await supabase.from("projetos").select();
+    e.preventDefault();
+
+    const project = ref.current;
+
+    const projectData = {
+      nome_projeto: project.nome_projeto.value,
+      descricao_projeto: project.descricao_projeto.value,
+    }
+
+    if (!project.nome_projeto || project.descricao_projeto) {
+      toast.warn("Preencha todos os campos!");
+    }
+
+    try {
+      const { error } = await supabase.from("projetos")
+      .upsert([projectData]);
+  
+      if (error) {
+        console.log(error);
+        toast.warn("Erro ao cadastrar projeto!");
+      }
+  
+      toast.success("Projeto cadastrado com sucesso!");
+  
+      setDescricaoProjeto("");
+      setNomeProjeto("");
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   return (
     <>
       <div className="flex justify-start mt-2">
-        <form className="w-full">
+        <form className="w-full" ref={ref} onSubmit={handleSubmit}>
           <div className="flex flex-wrap -mx-3 p-3">
 
             <div className="w-full md:w-1/3 px-3">
@@ -37,8 +73,10 @@ function CadastroProjetos() {
               <input
                 className="appearence-none block w-full bg-gray-100 rounded py-3 px-4 mb-3 mt-1 leading-tight focus:outline-gray-100 focus:bg-white"
                 type="text"
+                value={nomeProjeto}
                 name="nome_projeto"
                 placeholder="Nome do Projeto"
+                onChange={(e) => setNomeProjeto(e.target.value)}
               />
             </div>
             <div className="w-full md:w-1/3 px-3">
@@ -48,8 +86,10 @@ function CadastroProjetos() {
               <input
                 className="appearence-none block w-full bg-gray-100 rounded py-3 px-4 mb-3 mt-1 leading-tight focus:outline-gray-100 focus:bg-white"
                 type="text"
+                value={descricaoPorjeto}
                 name="descricao_projeto"
                 placeholder="Descrição do Projeto"
+                onChange={(e) => setDescricaoProjeto(e.target.value)}
               />
             </div>
             <div className="w-full md:w-1/3 px-3">
@@ -74,7 +114,7 @@ function CadastroProjetos() {
                   type="button"
                   onClick={handleAdd}
                 >
-                  <IoAddCircleSharp />
+                  <IoAddCircleSharp onClick={handleAdd}/>
                 </button>
 
               </div>

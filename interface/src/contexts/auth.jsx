@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
       const { error } = await supabase.auth.signInWithPassword({
         email: usuario,
         password: senha
-      })
+      });
 
       if (error) {
         toast.error("Erro ao fazer login. Verifique suas credenciais.");
@@ -49,6 +49,8 @@ export const AuthProvider = ({ children }) => {
         console.error("Erro de autenticação:", error);
         return;
       }
+
+      toast.success(`Usuário ${usuario} inserido com sucesso, favor confirmar conta no email cadastrado!`)
     } catch(error) {
       console.log("Erro ao inseir usuário: ", error)
     }

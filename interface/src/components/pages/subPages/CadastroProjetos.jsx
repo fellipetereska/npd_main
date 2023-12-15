@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { toast } from 'react-toastify';
+import { IoAddCircleSharp } from "react-icons/io5";
 import { supabase } from "../../../services/api";
 
 function CadastroProjetos() {
@@ -19,7 +20,9 @@ function CadastroProjetos() {
     getTecnologias();
   }, [])
 
-  console.log(tecnologias)
+  const handleAdd = () => {
+    console.log("Adicionado")
+  }
 
   return (
     <>
@@ -53,18 +56,28 @@ function CadastroProjetos() {
               <label className="tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-raza_social">
                 Tecnologias
               </label>
-              <select
-                className="appearance-none block w-full bg-gray-100 rounded py-3 px-4 mb-3 mt-1 leading-tight focus:outline-gray-100 focus:bg-white"
-                name="fk_tecnologia_id"
-                placeholder="Tecnologias"
-              >
-                <option value="null">Selecione uma Tecnologia</option>
-                {tecnologias && tecnologias.map((item) => (
-                  <option key={item.id} value={item.id_tecnologia}>
-                    {item.nome_tecnologia}
-                  </option>
-                ))}
-              </select>
+              <div className="flex gap-3">
+                <select
+                  className="appearance-none block w-full md:w-2/3 bg-gray-100 rounded py-3 px-4 mb-3 mt-1 leading-tight focus:outline-gray-100 focus:bg-white"
+                  name="fk_tecnologia_id"
+                  placeholder="Tecnologias"
+                >
+                  <option value="null">Selecione uma Tecnologia</option>
+                  {tecnologias && tecnologias.map((item) => (
+                    <option key={item.id} value={item.id_tecnologia}>
+                      {item.nome_tecnologia}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  className="bg-sky-600 hover:bg-sky-700 rounded-md text-white font-semibold px-3 mb-4 mt-2"
+                  type="button"
+                  onClick={handleAdd}
+                >
+                  <IoAddCircleSharp />
+                </button>
+
+              </div>
             </div>
 
 

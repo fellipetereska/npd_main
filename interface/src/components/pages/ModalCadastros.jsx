@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import CadastroParticipante from "./subPages/CadastroParticipante";
 import CadastroProjetos from "./subPages/CadastroProjetos";
 import CadastroNoticias from "./subPages/CadastroNoticias";
+import CadastroUsuario from "./subPages/CadastroUsuario";
 
 function Login({ onCancel, isOpen }) {
 
@@ -36,6 +37,12 @@ function Login({ onCancel, isOpen }) {
             <CadastroNoticias />
           </>
         );
+      case 3:
+        return (
+          <>
+            <CadastroUsuario />
+          </>
+        );
       default:
         return null;
     }
@@ -44,7 +51,7 @@ function Login({ onCancel, isOpen }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="modal-overlay absolute inset-0 backdrop-blur-[1px] bg-black bg-opacity-10" onClick={onCancel}></div>
-      <div className="modal-container w-full bottom-0 bg-white mx-auto rounded-xl z-50 overflow-y-auto px-8 py-4 fixed h-3/4">
+      <div className="modal-container w-full bottom-0 bg-white mx-auto rounded-t-2xl z-50 overflow-y-auto px-8 py-4 fixed h-3/4">
         <div className="flex justify-end">
           <button
             type="button"
@@ -73,6 +80,9 @@ function Login({ onCancel, isOpen }) {
             </li>
             <li class={`me-2 ${activeTab === 2 ? "rounded-t-lg bg-gray-50" : ""}`}>
               <button class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50" onClick={() => handleTabClick(2)}>Notícias</button>
+            </li>
+            <li class={`me-2 ${activeTab === 3 ? "rounded-t-lg bg-gray-50" : ""}`}>
+              <button class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50" onClick={() => handleTabClick(3)}>Usuários</button>
             </li>
           </ul>
           {renderContent()}

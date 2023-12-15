@@ -7,7 +7,7 @@ import { Navigate } from "react-router-dom";
 
 function Login({ onCancel, isOpen }) {
 
-  const { signin } = useAuth();
+  const { signin, signUp } = useAuth();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +17,7 @@ function Login({ onCancel, isOpen }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    signin(username, password, setRedirect);
+    await signin(username, password, setRedirect);
   };
 
   if (redirect == true) {

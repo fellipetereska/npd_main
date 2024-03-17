@@ -12,7 +12,7 @@ import ModalCadastros from '../pages/ModalCadastros';
 
 function Navbar() {
 
-  const { user, signout } = useAuth();
+  const [user, setUser] = useState('Fellipe');
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
@@ -35,7 +35,7 @@ function Navbar() {
   const handleCadastrosClose = () => setShowCadastros(false);
 
   const handleLogoutClick = () => {
-    signout(true);
+    setUser('');
     navigate("/")
     setIsMenuOpen(false)
   }
@@ -67,6 +67,7 @@ function Navbar() {
           </div>
           <div className={`items-center justify-between py-2 w-full md:flex md:w-auto md:order-1 ${isMenuOpen ? '' : 'hidden'}`}>
             <ul className={`flex flex-col justify-center font-semibold p-4 border-gray-100 rounded-md bg-gray-50 md:p-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white ${isMenuOpen ? '' : 'items-center'}`}>
+
               {/* Menu */}
               <li onClick={handleMenuItemClick}
                 className="block py-2 px-3 text-zinc-700 md:bg-transparent md:text-zinc-700 md:p-0 hover:rounded-md hover:text-sky-800"><Link to="/">Home</Link></li>
@@ -76,6 +77,7 @@ function Navbar() {
                 className="block py-2 px-3 text-zinc-700 md:bg-transparent md:text-zinc-700 md:p-0 hover:rounded-md hover:text-sky-800"><Link to="/projetos">Projetos</Link></li>
               <li onClick={handleMenuItemClick}
                 className="block py-2 px-3 text-zinc-700 md:bg-transparent md:text-zinc-700 md:p-0 hover:rounded-md hover:text-sky-800"><Link to="/noticias">Notícias</Link></li>
+
               {/* Botão Contato */}
               {user ? (
                 <></>

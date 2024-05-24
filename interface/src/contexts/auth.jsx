@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import { toast } from "react-toastify";
-import { supabase } from "../services/api";
+import { connect, supabase } from "../services/api";
 
 export const AuthContext = createContext({});
 
@@ -8,6 +8,7 @@ export const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
+  const [atualizar, setAtualizar] = useState(false);
 
   const signIn = async (usuario, senha, setRedirect) => {
 
@@ -51,15 +52,65 @@ export const AuthProvider = ({ children }) => {
       }
 
       toast.success(`Usuário ${usuario} inserido com sucesso, favor confirmar conta no email cadastrado!`)
-    } catch(error) {
+    } catch (error) {
       console.log("Erro ao inseir usuário: ", error)
     }
-  }
+  };
 
   const signout = () => {
     setUser(null);
   };
 
+  const getParticipantes = async () => {
+    try {
+      const response = await fetch(`${connect}/participantes`);
+
+      if (!response.ok) {
+        throw new Error(`Erro ao buscar participantes. Status: ${response.status}`)
+      }
+
+      const data = await response.json();
+
+      return data;
+
+    } catch (error) {
+      console.error(`Erro ao buscar dados dos participantes. Status: ${error}`)
+      throw error;
+    }
+  };
+
+  const InsertParticipantes = async (edit, data) => {
+    try {
+
+      const method = edit ? 'PUT' : 'POST';
+
+      const response = await fetch(`${connect}/participantes`, {
+        method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+    } catch (error) {
+      console.error(`Erro ao inserir participante. Status: ${error}`)
+    }
+  };
+
+  const getProjetos = async () => {
+    try {
+      const response = await fetch(`${connect}/projetos`);
+
+      if (!response.ok) {
+        throw new Error(`Erro ao buscar projetos. Status: ${response.status}`)
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(`Erro ao buscar dados dos projetos. Status: ${error}`)
+      throw error;
+    }
+  };
 
   return (
     <AuthContext.Provider
@@ -67,7 +118,11 @@ export const AuthProvider = ({ children }) => {
         user,
         signin: signIn,
         signout,
-        signUp
+        signUp,
+        getParticipantes,
+        getProjetos,
+        setAtualizar,
+        atualizar,
       }}>
       {children}
     </AuthContext.Provider>

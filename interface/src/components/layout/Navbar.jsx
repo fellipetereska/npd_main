@@ -12,6 +12,8 @@ import ModalCadastros from '../pages/ModalCadastros';
 
 function Navbar() {
 
+  const { setAtualizar, atualizar } = useAuth(null);
+
   const [user, setUser] = useState('Fellipe');
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,7 +34,10 @@ function Navbar() {
 
   // Tratando Modal Cadastros
   const handleCadastrosOpen = () => setShowCadastros(true);
-  const handleCadastrosClose = () => setShowCadastros(false);
+  const handleCadastrosClose = () => {
+    setAtualizar(!atualizar);
+    setShowCadastros(false);
+  }
 
   const handleLogoutClick = () => {
     setUser('');
@@ -120,7 +125,7 @@ function Navbar() {
                   >
                     Cadastros
                   </button>
-                  
+
                   <div className='hover:cursor-pointer py-2 rounded-md'>
                     <BiLogIn
                       className='text-gray-700 scale-150'
